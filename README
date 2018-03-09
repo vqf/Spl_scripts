@@ -1,0 +1,21 @@
+List and count splicing sites
+
+-Put all the bam files (or links to them) in the same folder. The scripts need not be in that folder, but you should invoke them from it.
+-Run run_RNASeq.sh. Warning: In its present form, this script runs the script on each file in parallel. If you want to run them one at a time, you can delete the & symbol in the bash file. This will take a while, so you may want to run it with nohup.
+-When the program is done, you should have a ".flagstat" and a "_raw.hsh" file per input bam. Each hsh file contains a description of all the splice sites found in each bam file, with the number of reads supporting it.
+-Run compile_table2.pl. There should be a new file called "retained.hsh". It contains information of the reads spanning each splicing site, but not supporting it, for each sample.
+
+Assign splice sites to genes
+
+-Download the latest gene definitions from Ensembl. At this point, it would be ftp://ftp.ensembl.org/pub/release-91/gtf/homo_sapiens/Homo_sapiens.GRCh38.91.gtf.gz
+
+	perl hsu_up.pl Homo_sapiens.GRCh37.91.gtf          (With full paths if necessary)
+
+-A file called hsu.hsh should appear.
+
+Create tables:
+
+-Run 
+    perl write_tables.pl
+
+-Several txt files should appear. The table containing the scores is ratio.txt	
